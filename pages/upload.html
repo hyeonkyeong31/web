@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>upload</title>
+    <link rel="stylesheet" href="/css/upload.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/2d323a629b.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/js/main.js" defer></script>
+</head>
+
+<body>
+    <!-- Nav container -->
+    <nav class="navbar">
+        <!-- Logo with text -->
+        <div class="navbar__logo">
+            <i class="fas fa-solid fa-paw"></i>
+
+            <a href="/index.html">Pekemon!</a>
+        </div>
+        <!-- Menu -->
+        <ul class="navbar__menu">
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="">Gallery</a></li>
+            <li><a href="">Login</a></li>
+        </ul>
+        <!-- Icons -->
+        <ul class="navbar__icons">
+            <li><i class="fab fa-twitter"></i></li>
+            <li><i class="fab fa-facebook-f"></i></li>
+        </ul>
+        <!-- Toggle button -->
+        <a href="#" class="navbar__toggleBtn">
+            <i class="fas fa-bars"></i>
+        </a>
+    </nav>
+
+
+
+    <section class="upload_container">
+        <div class="upload_frame">
+            <div class="text_box">
+                <div class="step_2"># STEP 1</div>
+                <div class="text">SELECT IMAGE</div>
+            </div>
+            <div class="line_dot">
+                <img id="uploaded_img">
+            </div>
+            <form action="result.html" method="get" enctype="multipart/form-data" class="filebox"> 
+                <!-- 모델 url post로 쓰기. (시각적으로 보이게 테스트하려고 get으로 해뒀음) -->
+                <label for="ex_file">Select from the library</label>
+                <input type="file" id="ex_file">
+                <input type="submit" class="submit_btn" id="submit_btn">
+            </form>
+
+        </div>
+
+
+    </section>
+    <p class="team_name">Made by 참새에 방앗GAN</p>
+    <script type="text/javascript">
+        var sel_file;
+
+        $(document).ready(function() {
+            $("#ex_file").on("change", handleImgFileSelect);
+        });
+
+        function handleImgFileSelect(e) {
+            var files = e.target.files;
+            var filesArr = Array.prototype.slice.call(files);
+            console.log(files);
+            filesArr.forEach(function(f) {
+                if(!f.type.match("image.*")) {
+                    alert("확장자는 이미지 확장자만 가능합니다.");
+                    return;
+                }
+
+                sel_file = f;
+
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $("#uploaded_img").attr("src", e.target.result);
+                }
+                reader.readAsDataURL(f);
+                $("#submit_btn").css('display', 'block');
+
+            });
+        }
+    </script>
+</body>
+
+</html>
